@@ -1,217 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MultiShare.ai - One Click, All Platforms</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MultiShare.ai - One Click, All Platforms</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-1: #020817;
+      --bg-2: #111827;
+      --panel: rgba(15, 23, 42, 0.65);
+      --panel-strong: rgba(15, 23, 42, 0.9);
+      --line: rgba(148, 163, 184, 0.18);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --cyan: #22d3ee;
+      --fuchsia: #d946ef;
+      --green: #34d399;
+      --shadow: 0 30px 60px rgba(15, 23, 42, 0.5);
+    }
 
-    <!-- Fixed CDNs -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    * { box-sizing: border-box; }
 
-    <style>
-        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: #f8fafc; min-height: 100vh; }
-       .glass { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
-       .glass-hover:hover { border-color: rgba(6, 182, 212, 0.5); }
-       .hide { display: none!important; }
-    </style>
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-1) 0%, #1e1b4b 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    .platform-card {
+      transition: all 0.2s ease;
+    }
+
+    .platform-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(34, 211, 238, 0.6);
+    }
+
+    .no-select {
+      user-select: none;
+    }
+  </style>
 </head>
-<body class="min-h-screen">
+<body>
+  <nav class="sticky top-0 z-50 border-b border-slate-800/70 bg-slate-950/60 backdrop-blur-md">
+    <div class="mx-auto max-w-6xl px-5 py-4 flex items-center justify-between gap-4">
+      <div class="text-2xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+        <i class="fa-solid fa-layer-group mr-2"></i>MultiShare.ai
+      </div>
 
-    <!-- Navbar -->
-    <nav class="p-5 flex justify-between items-center border-b border-slate-800 glass sticky top-0 z-50">
-        <div class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-            <i class="fa-solid fa-layer-group mr-2"></i>MultiShare.ai
+      <div class="flex items-center gap-3">
+        <button type="button" onclick="switchTab('login')" class="px-4 py-2 rounded-full text-slate-200 hover:text-cyan-400 transition">
+          Login
+        </button>
+        <button type="button" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-full font-medium bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:opacity-95 transition shadow-lg shadow-cyan-500/20">
+          Go to Dashboard
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="mx-auto max-w-6xl px-4 sm:px-6 py-8 md:py-10">
+    <section id="login-section" class="hide max-w-md mx-auto">
+      <div class="glass rounded-3xl p-8 text-center shadow-2xl">
+        <h2 class="text-3xl font-bold mb-2">Welcome Creator</h2>
+        <p class="text-slate-400 text-sm mb-7">Connect your accounts to start multi-posting</p>
+
+        <div class="space-y-4">
+          <button type="button" class="w-full bg-white text-slate-900 py-3.5 rounded-xl font-medium flex items-center justify-center gap-3 hover:bg-slate-100 transition">
+            <i class="fa-brands fa-google text-red-500 text-lg"></i>
+            Continue with Google
+          </button>
+
+          <button type="button" class="w-full bg-[#1877F2] text-white py-3.5 rounded-xl font-medium flex items-center justify-center gap-3 hover:opacity-90 transition">
+            <i class="fa-brands fa-facebook text-lg"></i>
+            Continue with Facebook
+          </button>
+
+          <button type="button" class="w-full bg-slate-900 border border-slate-700 text-white py-3.5 rounded-xl font-medium flex items-center justify-center gap-3 hover:bg-slate-800 transition">
+            <i class="fa-solid fa-phone text-emerald-400 text-lg"></i>
+            Login with Phone Number
+          </button>
         </div>
-        <div class="flex gap-3">
-            <button onclick="switchTab('login')" class="hover:text-cyan-400 transition px-4 py-2">Login</button>
-            <button onclick="switchTab('dashboard')" class="bg-gradient-to-r from-cyan-500 to-fuchsia-500 px-5 py-2 rounded-full font-medium hover:opacity-90 transition">Go to Dashboard</button>
-        </div>
-    </nav>
 
-    <main class="container mx-auto p-6 max-w-6xl mt-6">
+        <p class="mt-7 text-xs text-slate-500">Demo login — click “Go to Dashboard” to continue</p>
+      </div>
+    </section>
 
-        <!-- LOGIN SECTION -->
-        <div id="login-section" class="max-w-md mx-auto glass p-8 rounded-3xl text-center shadow-2xl hide">
-            <h2 class="text-3xl font-bold mb-2">Welcome Creator</h2>
-            <p class="text-slate-400 text-sm mb-6">Connect your accounts to start multi-posting</p>
-            <div class="space-y-4">
-                <button class="w-full bg-white text-black py-3 rounded-xl font-medium flex items-center justify-center gap-3 hover:bg-slate-100 transition">
-                    <i class="fa-brands fa-google text-red-500 text-lg"></i> Continue with Google
-                </button>
-                <button class="w-full bg-[#1877F2] text-white py-3 rounded-xl font-medium flex items-center justify-center gap-3 hover:opacity-90 transition">
-                    <i class="fa-brands fa-facebook text-lg"></i> Continue with Facebook
-                </button>
-                <button class="w-full bg-slate-900 border border-slate-700 text-white py-3 rounded-xl font-medium flex items-center justify-center gap-3 hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-phone text-emerald-400 text-lg"></i> Login with Phone Number
-                </button>
-            </div>
-            <p class="text-xs text-slate-500 mt-6">Demo login — click Go to Dashboard to continue</p>
+    <section id="dashboard-section" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2 space-y-6">
+        <div id="dropZone" class="glass rounded-3xl border-2 border-dashed border-slate-700 hover:border-cyan-500 transition text-center p-8 relative group cursor-pointer">
+          <input id="videoFile" type="file" accept="video/*" class="absolute inset-0 opacity-0 cursor-pointer" />
+          <i class="fa-solid fa-cloud-arrow-up text-5xl text-slate-500 group-hover:text-cyan-400 mb-4 block transition"></i>
+          <h3 id="upload-status" class="text-xl font-semibold mb-1">Drag &amp; Drop your Video / Short / Story</h3>
+          <p id="upload-sub" class="text-slate-400 text-xs">Supports MP4, MOV up to 500MB</p>
         </div>
 
-        <!-- DASHBOARD SECTION -->
-        <div id="dashboard-section" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="glass rounded-3xl p-6 space-y-4">
+          <div>
+            <label for="titleInput" class="block text-sm font-medium text-slate-300 mb-2">Video Title</label>
+            <input id="titleInput" type="text" placeholder="Enter an eye-catching title..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500" oninput="updateViral()" />
+          </div>
 
-            <div class="lg:col-span-2 space-y-6">
-                <!-- Upload -->
-                <div id="dropZone" class="glass p-8 rounded-3xl border-2 border-dashed border-slate-700 hover:border-cyan-500 transition text-center relative group cursor-pointer">
-                    <input type="file" id="videoFile" class="absolute inset-0 opacity-0 cursor-pointer" accept="video/*">
-                    <i class="fa-solid fa-cloud-arrow-up text-5xl text-slate-500 group-hover:text-cyan-400 mb-4 transition block"></i>
-                    <h3 class="text-xl font-semibold mb-1" id="upload-status">Drag & Drop your Video / Short / Story</h3>
-                    <p class="text-slate-400 text-xs" id="upload-sub">Supports MP4, MOV up to 500MB</p>
-                </div>
-
-                <!-- Inputs -->
-                <div class="glass p-6 rounded-3xl space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Video Title</label>
-                        <input type="text" id="titleInput" oninput="updateViral()" placeholder="Enter an eye-catching title..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 text-white">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Description</label>
-                        <textarea id="descInput" oninput="updateViral()" rows="4" placeholder="Write your description here..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 text-white"></textarea>
-                    </div>
-                </div>
-
-                <!-- Platforms -->
-                <div class="glass p-6 rounded-3xl">
-                    <h3 class="text-lg font-semibold mb-4"><i class="fa-solid fa-circle-nodes text-cyan-400 mr-2"></i>Select Platforms to Post</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="platformGrid">
-                        <label class="platform-card flex items-center gap-3 p-4 bg-slate-900/50 rounded-2xl border border-slate-800 cursor-pointer hover:border-blue-600 transition">
-                            <input type="checkbox" checked onchange="updateViral()" data-platform="fb" class="w-5 h-5 accent-blue-600">
-                            <i class="fa-brands fa-facebook text-blue-600 text-xl"></i> Facebook
-                        </label>
-                        <label class="platform-card flex items-center gap-3 p-4 bg-slate-900/50 rounded-2xl border border-slate-800 cursor-pointer hover:border-pink-500 transition">
-                            <input type="checkbox" checked onchange="updateViral()" data-platform="ig" class="w-5 h-5 accent-pink-500">
-                            <i class="fa-brands fa-instagram text-pink-500 text-xl"></i> Instagram
-                        </label>
-                        <label class="platform-card flex items-center gap-3 p-4 bg-slate-900/50 rounded-2xl border border-slate-800 cursor-pointer hover:border-white transition">
-                            <input type="checkbox" onchange="updateViral()" data-platform="tt" class="w-5 h-5 accent-white">
-                            <i class="fa-brands fa-tiktok text-white text-xl"></i> TikTok
-                        </label>
-                        <label class="platform-card flex items-center gap-3 p-4 bg-slate-900/50 rounded-2xl border border-slate-800 cursor-pointer hover:border-red-600 transition">
-                            <input type="checkbox" onchange="updateViral()" data-platform="yt" class="w-5 h-5 accent-red-600">
-                            <i class="fa-brands fa-youtube text-red-600 text-xl"></i> YouTube
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Side -->
-            <div class="space-y-6">
-                <div class="glass p-6 rounded-3xl text-center relative overflow-hidden">
-                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-fuchsia-500/10 blur-3xl rounded-full"></div>
-                    <h3 class="text-md font-semibold text-slate-400 mb-2">AI Viral Probability</h3>
-                    <div class="text-6xl font-black my-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400" id="viralScore">84%</div>
-                    <div class="w-full bg-slate-800 rounded-full h-2 mb-3"><div id="viralBar" class="h-2 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400" style="width:84%"></div></div>
-                    <p class="text-xs text-slate-400 px-2" id="viralText">Based on keyword trends. High chance to go viral!</p>
-                </div>
-
-                <div class="glass p-6 rounded-3xl space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-bold text-lg"><i class="fa-solid fa-wand-magic-sparkles text-fuchsia-400 mr-2"></i>AI Content Engine</h3>
-                        <button onclick="triggerAI()" class="text-xs bg-slate-800 text-cyan-400 px-3 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-700 transition">Regenerate</button>
-                    </div>
-                    <div>
-                        <span class="text-xs text-slate-400 block mb-2">Suggested High-CTR Titles</span>
-                        <div class="space-y-2 text-sm" id="titleSuggestions"></div>
-                    </div>
-                    <div>
-                        <span class="text-xs text-slate-400 block mb-2">Trending Hashtags</span>
-                        <div class="flex flex-wrap gap-2 text-xs" id="hashtagBox"></div>
-                    </div>
-                </div>
-
-                <button onclick="publish()" id="publishBtn" class="w-full bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 text-white font-bold py-4 rounded-2xl shadow-xl hover:opacity-95 transition tracking-wide text-lg">
-                    <i class="fa-solid fa-paper-plane mr-2"></i>Publish to Linked Accounts
-                </button>
-                <p id="publishStatus" class="text-center text-xs text-emerald-400 hidden">✅ Published Successfully (Demo)</p>
-            </div>
+          <div>
+            <label for="descInput" class="block text-sm font-medium text-slate-300 mb-2">Description</label>
+            <textarea id="descInput" rows="4" placeholder="Write your description here..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500" oninput="updateViral()"></textarea>
+          </div>
         </div>
-    </main>
 
-<script>
-const titles = [
-    "🚀 This Secret Feature Changes Everything!",
-    "Stop doing THIS if you want to grow fast 😱",
-    "I Tried Posting at 3AM and This Happened...",
-    "The Algorithm Hates This Trick (But It Works)",
-    "How I Got 100K Views in 24 Hours - Full Breakdown",
-    "Nobody Tells You This About Going Viral"
-];
-const hashtags = ["#foryou", "#trending2026", "#viralshorts", "#creators", "#aigrowth", "#fyp", "#contentcreator", "#explore"];
+        <div class="glass rounded-3xl p-6">
+          <h3 class="text-lg font-semibold mb-4"><i class="fa-solid fa-circle-nodes text-cyan-400 mr-2"></i>Select Platforms to Post</h3>
 
-function switchTab(tab){
-    document.getElementById('login-section').classList.toggle('hide', tab!== 'login');
-    document.getElementById('dashboard-section').classList.toggle('hide', tab!== 'dashboard');
-}
+          <div id="platformGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <label class="platform-card flex items-center gap-3 p-4 bg-slate-900/50 rounded-2xl border border-slate-800 cursor-pointer">
+              <input type="checkbox" checked onchange="updateViral()" class="w-5 h-5 accent-blue-600" />
+              <span class="flex items-center gap-2"><i class="fa-brands fa-facebook text-blue-600 text-xl"></i>Facebook</span>
+            </label>
 
-function handleUpload(file){
-    const status = document.getElementById('upload-status');
-    const sub = document.getElementById('upload-sub');
-    if(!file) return;
-    if(file.size > 500*1024*1024){ alert("File 500MB se zyada hai"); return; }
-    status.textContent = "✅ " + file.name;
-    sub.textContent = (file.size/1024/1024).toFixed(1) + " MB - Ready to publish";
-    updateViral();
-}
+            <label class="platform-card flex items-center gap-3 p-4 bg-slate-900/50 rounded-2xl border border-slate-800 cursor-pointer">
+              <input type="checkbox" checked onchange="updateViral()" class="w-5 h-5 accent-pink-500" />
+              <span class="flex items-center gap-2"><i class="fa-brands fa-instagram text-pink-500 text-xl"></i>Instagram</span>
+            </label>
 
-document.getElementById('videoFile').addEventListener('change', e => handleUpload(e.target.files[0]));
+            <label class="platform-card flex items-center gap-3 p-4 bg-slate-900/50 rounded-2xl border border-slate-800 cursor-pointer">
+              <input type="checkbox" onchange="updateViral()" class="w-5 h-5 accent-white" />
+              <span class="flex items-center gap-2"><i class="fa-brands fa-tiktok text-white text-xl"></i>TikTok</span>
+            </label>
 
-const dropZone = document.getElementById('dropZone');
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-cyan-500'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-cyan-500'));
-dropZone.addEventListener('drop', e => {
-    e.preventDefault(); dropZone.classList.remove('border-cyan-500');
-    handleUpload(e.dataTransfer.files[0]);
-});
+            <label class="platform-card flex items-center gap-3 p-4 bg-slate-900/50 rounded-2xl border border-slate-800 cursor-pointer">
+              <input type="checkbox" onchange="updateViral()" class="w-5 h-5 accent-red-600" />
+              <span class="flex items-center gap-2"><i class="fa-brands fa-youtube text-red-600 text-xl"></i>YouTube</span>
+            </label>
+          </div>
+        </div>
+      </div>
 
-function applyTitle(el){ document.getElementById('titleInput').value = el.textContent; updateViral(); }
+      <div class="space-y-6">
+        <div class="glass rounded-3xl p-6 text-center relative overflow-hidden">
+          <div class="absolute -right-10 -top-10 w-32 h-32 bg-fuchsia-500/10 blur-3xl rounded-full"></div>
+          <h3 class="text-md font-semibold text-slate-400 mb-2">AI Viral Probability</h3>
+          <div id="viralScore" class="text-6xl font-black my-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">84%</div>
+          <div class="w-full bg-slate-800 rounded-full h-2 mb-3 overflow-hidden">
+            <div id="viralBar" class="h-2 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400" style="width:84%"></div>
+          </div>
+          <p id="viralText" class="text-xs text-slate-400 px-2">Based on keyword trends. High chance to go viral!</p>
+        </div>
 
-function triggerAI(){
-    const titleBox = document.getElementById('titleSuggestions');
-    const shuffled = [...titles].sort(()=>0.5-Math.random()).slice(0,2);
-    titleBox.innerHTML = shuffled.map(t=>`<div onclick="applyTitle(this)" class="p-2.5 bg-slate-900 rounded-xl border border-slate-800 cursor-pointer hover:border-fuchsia-500 transition">${t}</div>`).join('');
-    const hashBox = document.getElementById('hashtagBox');
-    hashBox.innerHTML = [...hashtags].sort(()=>0.5-Math.random()).slice(0,4).map(h=>`<span onclick="addHashtag('${h}')" class="px-2.5 py-1.5 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-lg cursor-pointer hover:bg-cyan-500/20">${h}</span>`).join('');
-    updateViral();
-}
-function addHashtag(tag){
-    const desc = document.getElementById('descInput');
-    if(!desc.value.includes(tag)) desc.value += (desc.value? " " : "") + tag;
-    updateViral();
-}
-function updateViral(){
-    let score = 50;
-    const title = document.getElementById('titleInput').value;
-    const desc = document.getElementById('descInput').value;
-    if(title.length > 10) score += 15;
-    if(title.includes("!") || title.includes("😱") || title.includes("🚀")) score += 10;
-    if(desc.length > 20) score += 5;
-    const checked = document.querySelectorAll('#platformGrid input:checked').length;
-    score += checked * 5;
-    if(document.getElementById('upload-status').textContent.includes("✅")) score += 10;
-    score = Math.min(97, Math.max(42, score));
-    document.getElementById('viralScore').textContent = score + "%";
-    document.getElementById('viralBar').style.width = score + "%";
-    document.getElementById('viralText').textContent = score > 80? "High chance to go viral! 🔥" : score > 60? "Good potential, add more hooks" : "Add a stronger title + hashtags";
-}
-function publish(){
-    const btn = document.getElementById('publishBtn');
-    const title = document.getElementById('titleInput').value;
-    if(!title){ alert("Pehle Title likho!"); return; }
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Publishing...';
-    btn.disabled = true;
-    setTimeout(()=>{
+        <div class="glass rounded-3xl p-6 space-y-4">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-bold text-lg"><i class="fa-solid fa-wand-magic-sparkles text-fuchsia-400 mr-2"></i>AI Content Engine</h3>
+            <button type="button" onclick="triggerAI()" class="text-xs bg-slate-800 text-cyan-400 px-3 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-700 transition">
+              Regenerate
+            </button>
+          </div>
+
+          <div>
+            <span class="text-xs text-slate-400 block mb-2">Suggested High-CTR Titles</span>
+            <div id="titleSuggestions" class="space-y-2 text-sm"></div>
+          </div>
+
+          <div>
+            <span class="text-xs text-slate-400 block mb-2">Trending Hashtags</span>
+            <div id="hashtagBox" class="flex flex-wrap gap-2 text-xs"></div>
+          </div>
+        </div>
+
+        <button id="publishBtn" type="button" onclick="publish()" class="w-full bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 text-white font-bold py-4 rounded-2xl shadow-xl hover:opacity-95 transition tracking-wide text-lg">
+          <i class="fa-solid fa-paper-plane mr-2"></i>Publish to Linked Accounts
+        </button>
+
+        <p id="publishStatus" class="hidden text-center text-xs text-emerald-400">✅ Published Successfully (Demo)</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const titles = [
+      '🚀 This Secret Feature Changes Everything!',
+      'Stop doing THIS if you want to grow fast 😱',
+      'I Tried Posting at 3AM and This Happened...',
+      'The Algorithm Hates This Trick (But It Works)',
+      'How I Got 100K Views in 24 Hours - Full Breakdown',
+      'Nobody Tells You This About Going Viral'
+    ];
+
+    const hashtags = [
+      '#foryou', '#trending2026', '#viralshorts', '#creators', '#aigrowth', '#fyp', '#contentcreator', '#explore'
+    ];
+
+    function switchTab(tab) {
+      const loginSection = document.getElementById('login-section');
+      const dashboardSection = document.getElementById('dashboard-section');
+
+      if (tab === 'login') {
+        loginSection.classList.remove('hide');
+        dashboardSection.classList.add('hide');
+      } else {
+        loginSection.classList.add('hide');
+        dashboardSection.classList.remove('hide');
+      }
+    }
+
+    function updateViral() {
+      let score = 50;
+      const title = document.getElementById('titleInput').value || '';
+      const desc = document.getElementById('descInput').value || '';
+      const uploadStatus = document.getElementById('upload-status').textContent || '';
+      const checkedPlatforms = document.querySelectorAll('#platformGrid input:checked').length;
+
+      if (title.length > 10) score += 15;
+      if (title.includes('!') || title.includes('😱') || title.includes('🚀')) score += 10;
+      if (desc.length > 20) score += 5;
+      score += checkedPlatforms * 5;
+      if (uploadStatus.includes('✅')) score += 10;
+
+      score = Math.min(97, Math.max(42, score));
+
+      document.getElementById('viralScore').textContent = score + '%';
+      document.getElementById('viralBar').style.width = score + '%';
+      document.getElementById('viralText').textContent = score > 80
+        ? 'High chance to go viral! 🔥'
+        : score > 60
+          ? 'Good potential, add more hooks'
+          : 'Add a stronger title + hashtags';
+    }
+
+    function handleUpload(file) {
+      const status = document.getElementById('upload-status');
+      const sub = document.getElementById('upload-sub');
+
+      if (!file) return;
+
+      if (file.size > 500 * 1024 * 1024) {
+        alert('File size exceeds 500MB');
+        return;
+      }
+
+      status.textContent = '✅ ' + file.name;
+      sub.textContent = (file.size / (1024 * 1024)).toFixed(1) + ' MB - Ready to publish';
+      updateViral();
+    }
+
+    function applyTitle(el) {
+      const titleInput = document.getElementById('titleInput');
+      titleInput.value = el.textContent;
+      updateViral();
+    }
+
+    function addHashtag(tag) {
+      const descInput = document.getElementById('descInput');
+      const value = descInput.value.trim();
+
+      if (!value.includes(tag)) {
+        descInput.value = value ? value + ' ' + tag : tag;
+      }
+
+      updateViral();
+    }
+
+    function triggerAI() {
+      const titleSuggestions = document.getElementById('titleSuggestions');
+      const hashtagBox = document.getElementById('hashtagBox');
+
+      const shuffledTitles = [...titles].sort(() => Math.random() - 0.5).slice(0, 2);
+      titleSuggestions.innerHTML = shuffledTitles.map((title) => {
+        return '<div onclick="applyTitle(this)" class="p-2.5 bg-slate-900 rounded-xl border border-slate-800 cursor-pointer hover:border-fuchsia-500 transition no-select">' + title + '</div>';
+      }).join('');
+
+      const shuffledTags = [...hashtags].sort(() => Math.random() - 0.5).slice(0, 4);
+      hashtagBox.innerHTML = shuffledTags.map((tag) => {
+        return '<span onclick="addHashtag(\'' + tag + '\')" class="px-2.5 py-1.5 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-lg cursor-pointer hover:bg-cyan-500/20 no-select">' + tag + '</span>';
+      }).join('');
+
+      updateViral();
+    }
+
+    function publish() {
+      const title = document.getElementById('titleInput').value.trim();
+      const btn = document.getElementById('publishBtn');
+      const status = document.getElementById('publishStatus');
+
+      if (!title) {
+        alert('Please enter a title first!');
+        return;
+      }
+
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Publishing...';
+      btn.disabled = true;
+
+      setTimeout(() => {
         btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i>Publish to Linked Accounts';
         btn.disabled = false;
-        document.getElementById('publishStatus').classList.remove('hidden');
-        setTimeout(()=>document.getElementById('publishStatus').classList.add('hidden'), 4000);
-    }, 1500);
-}
-// init
-triggerAI(); switchTab('dashboard');
-</script>
+        status.classList.remove('hidden');
+        setTimeout(() => status.classList.add('hidden'), 4000);
+      }, 1500);
+    }
+
+    document.getElementById('videoFile').addEventListener('change', function (event) {
+      handleUpload(event.target.files[0]);
+    });
+
+    const dropZone = document.getElementById('dropZone');
+    dropZone.addEventListener('dragover', function (event) {
+      event.preventDefault();
+      dropZone.classList.add('border-cyan-500');
+    });
+
+    dropZone.addEventListener('dragleave', function () {
+      dropZone.classList.remove('border-cyan-500');
+    });
+
+    dropZone.addEventListener('drop', function (event) {
+      event.preventDefault();
+      dropZone.classList.remove('border-cyan-500');
+      handleUpload(event.dataTransfer.files[0]);
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      triggerAI();
+      switchTab('dashboard');
+      updateViral();
+    });
+  </script>
 </body>
 </html>
