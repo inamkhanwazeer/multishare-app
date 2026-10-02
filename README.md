@@ -1,0 +1,2 @@
+# multishare-app
+Dashboard application
